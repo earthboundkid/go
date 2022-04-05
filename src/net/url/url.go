@@ -1193,7 +1193,11 @@ func (u *URL) JoinPath(elem ...string) *URL {
 	url := *u
 	if len(elem) > 0 {
 		elem = append([]string{u.Path}, elem...)
-		url.setPath(path.Join(elem...))
+		p := path.Join(elem...)
+		if strings.HasSuffix(elem[len(elem)-1], "/") {
+			p += "/"
+		}
+		url.setPath(p)
 	}
 	return &url
 }
